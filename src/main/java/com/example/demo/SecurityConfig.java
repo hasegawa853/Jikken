@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
 @Configuration
@@ -31,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final String USER_SQL = "SELECT  user_id ,password,  true FROM m_user WHERE user_id=?";
 
 	// ユーザのロールを取得するSQL
-	private static final String ROLE_SQL = "SELECT user_id role FROM m_user WHERE user_id=?";
+	private static final String ROLE_SQL = "SELECT user_id, role FROM m_user WHERE user_id=?";
 
 	@Override
 	public void configure(WebSecurity web) {
@@ -45,11 +46,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// ログイン不要ページの設定
 		http.authorizeRequests().antMatchers("/webjars/**").permitAll().antMatchers("/css/**").permitAll()
 				.antMatchers("/js/**").permitAll().antMatchers("/login").permitAll().antMatchers("/signup").permitAll()
-				.anyRequest().authenticated();
+				.antMatchers("/admin").hasAuthority("ROLE_ADMIN").anyRequest().authenticated();
 
 		// ログイン処理
 		http.formLogin().loginProcessingUrl("/login").loginPage("/login").failureUrl("/login")
 				.usernameParameter("userId").passwordParameter("password").defaultSuccessUrl("/home", true);
+
+		// ログアウト処理
+		http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutUrl("/logout")
+				.logoutSuccessUrl("/login");
 
 		// CSRF対策を無効に設定
 		http.csrf().disable();
