@@ -6,16 +6,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.login.domain.repository.UserDao;
 
 //テスト用アノテーション
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@Transactional
+@RunWith(SpringRunner.class) // ここと
+@SpringBootTest // ここのアノテーションがClass<SpringRunner> cannot be resolved to a typeとなる
+@Transactional // ライブラリがダウンロードされていない、されているが壊れている可能性はあるため
+				// jarのフォルダを一度消して再インストールをしたい。
 public class UserDaoTest {
 	@Autowired
 	@Qualifier("UserDaoJdbcImpl")
@@ -31,7 +30,7 @@ public class UserDaoTest {
 	// カウントメソッドのテスト2
 	// @Sql
 	@Test
-	@Sql("/testdata.sql")
+	@Sql("/testdata.sql") // @SQLと同様にcannot be resolved to a typeとなる
 	public void countTest2() {
 		// カウントメソッドの結果が3件であることをテスト
 		assertEquals(dao.count(), 3);
