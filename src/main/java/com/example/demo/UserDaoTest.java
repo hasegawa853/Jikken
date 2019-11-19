@@ -2,7 +2,7 @@ package com.example.demo;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,10 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.login.domain.repository.UserDao;
 
 //テスト用アノテーション
-@RunWith(SpringRunner.class) // ここと
-@SpringBootTest // ここのアノテーションがClass<SpringRunner> cannot be resolved to a typeとなる
-@Transactional // ライブラリがダウンロードされていない、されているが壊れている可能性はあるため
-				// jarのフォルダを一度消して再インストールをしたい。
+@RunWith(SpringRunner.class) // pom.xmlを見るとライブラリの記述はある。
+@SpringBootTest // Junitだけ使用できないことがわかる。参照できないのはverをどこかで
+@Transactional // 意図せず変えてしまったからか。JunitはEcripseで標準搭載だからpomに使う宣言を
+				// すれば使えるはず。pomの記述が何かしらおかしい以外の原因が思いつかないが、
+				// その解決法を探す必要あり。POMにJunitの記述がそもそもない？
 public class UserDaoTest {
 	@Autowired
 	@Qualifier("UserDaoJdbcImpl")
@@ -28,7 +29,7 @@ public class UserDaoTest {
 	}
 
 	// カウントメソッドのテスト2
-	// @Sql
+
 	@Test
 	@Sql("/testdata.sql") // @SQLと同様にcannot be resolved to a typeとなる
 	public void countTest2() {
