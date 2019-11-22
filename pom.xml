@@ -92,7 +92,7 @@
     <scope>test</scope>
 </dependency>
 
-<!-- ここから追加部分 JUnit5を実行するライブラリの追加 -->
+<!-- ここから追加部分 JUnit5を実行するライブラリの追加 多分使っていない-->
 
  <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -116,7 +116,7 @@
 
 	<build>
 		<plugins>
-		<!-- ここから追加部分 JUnit5を実行するライブラリの追加 -->
+		<!-- ここから追加部分 JUnit5を実行するライブラリの追加 多分使っていない-->
 		<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -129,7 +129,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 </plugin>
-		<!-- ここから追加部分 JUnit5を実行するライブラリの追加 -->
+		<!-- ここまで -->
 		
 		
 			<plugin>

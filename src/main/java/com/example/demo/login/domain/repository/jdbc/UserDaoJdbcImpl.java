@@ -40,10 +40,8 @@ public class UserDaoJdbcImpl implements UserDao {
 		String sql = "INSERT INTO m_user(user_id,password,user_name,birthday,age,marriage,role)VALUES(?,?,?,?,?,?,?)";
 
 		// 1件挿入するSQL
-		int rowNumber = jdbc.update(
-				"insert into m_user(user_id,password,user_name,birthday,age,marriage,role) values(?,?,?,?,?,?,?)",
-				user.getUserId(), password, user.getUserName(), user.getBirthday(), user.getAge(), user.isMarriage(),
-				user.getRole());
+		int rowNumber = jdbc.update(sql, user.getUserId(), password, user.getUserName(), user.getBirthday(),
+				user.getAge(), user.isMarriage(), user.getRole());
 
 		return rowNumber;
 	}

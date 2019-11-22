@@ -34,7 +34,7 @@ class FirstJUnit5Tests {
 	// カウントメソッドのテスト２
 	// ポイント＠sql
 	@Test
-	@Sql("/testdata.sql")
+	@Sql("/testdata.sql") // scriptは書いて、すぐに実行できるプログラム
 	public void countTest2() {// 実行結果が'script' must not be null or emptyのエラー
 		// カウントメソッドの結果が3件であることをテスト
 		assertEquals(dao.count(), 3);
